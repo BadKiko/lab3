@@ -1,3 +1,3 @@
 # lab3
 ## Подписка лайк и звезда на репо гита ♥
-### Для работы скачать pip install bs4
+### Для работы скачать pip install -r requirments.txt
