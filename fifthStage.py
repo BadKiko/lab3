@@ -24,7 +24,7 @@ for txt_file in txt_files:
         for line in file:
             row = line.strip().split()
             if len(row) >= 4:  # Проверка наличия достаточного количества элементов в строке
-                row = [int(row[2]), float(row[3])]
+                row = [int(row[0]), int(row[1]), int(row[2]), float(row[3])]
                 data.append(row)
     
     with open(csv_file, 'w', newline='') as file:

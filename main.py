@@ -20,10 +20,8 @@ print(ascii_banner2)
 
 print("\n1/5 Инициализация всех текстовых файлов")
 
-
-#script_path = "firstStage.py"
-#subprocess.call(["python", script_path])
-
+script_path = "firstStage.py"
+subprocess.call(["python", script_path])
 
 print("\n2/8 Создание таблицы с городами, странами, регионами")
 

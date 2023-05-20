@@ -94,6 +94,39 @@ def createCities():
     cities_df.to_csv('data/cities.csv', index=False)
     print("Создан файл городов data/cities.csv")
 
+
+
+def create_measurement_csv():
+    # Чтение файла cities.csv
+    cities_df = pd.read_csv('data/cities.csv')
+
+    # Открытие CSV-файла для записи
+    with open('data/measurement.csv', 'w') as file:
+        file.write('city,mark,timestamp,temperature\n')  # Запись заголовка
+
+        # Проход по каждой записи в cities_df
+        for index, row in cities_df.iterrows():
+            city_name = row['description']
+            dataset = row['dataset']
+
+            # Путь к файлу с данными
+            file_path = f'dataset/output_csv/{dataset}.csv'
+
+            # Чтение данных из файла и запись в CSV-файл
+            with open(file_path, 'r') as data_file:
+                next(data_file)  # Пропуск заголовка файла
+                for line in data_file:
+                    parts = line.strip().split(',')
+                    timestamp = parts[2]
+                    temperature = parts[3]
+
+                    # Запись строки в CSV-файл
+                    file.write(f'{city_name},{dataset},{timestamp},{temperature}\n')
+
+    print("Создан файл с измерениями data/measurement.csv")
+
+
 createRegions()
 createCountries()
 createCities()
+create_measurement_csv()
