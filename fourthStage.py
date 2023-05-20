@@ -1,3 +1,14 @@
+#Created by Kiko with ♥ for fucking slaves
+
+
+#██╗░░██╗██╗██╗░░██╗░█████╗░
+#██║░██╔╝██║██║░██╔╝██╔══██╗
+#█████═╝░██║█████═╝░██║░░██║
+#██╔═██╗░██║██╔═██╗░██║░░██║
+#██║░╚██╗██║██║░╚██╗╚█████╔╝
+#╚═╝░░╚═╝╚═╝╚═╝░░╚═╝░╚════╝░
+
+
 import os
 import shapefile
 import json
@@ -9,7 +20,7 @@ from tqdm import tqdm
 
 def downloadCoastline():
     # URL для скачивания файла
-    url = "https://naciscdn.org/naturalearth/10m/cultural/ne_10m_admin_0_countries.zip"
+    url = "https://naciscdn.org/naturalearth/10m/cultural/ne_10m_populated_places.zip"
 
     # Папка для сохранения файлов
     folder = "countries"
@@ -30,7 +41,7 @@ def downloadCoastline():
     block_size = 1024  # 1 KB
     progress_bar = tqdm(total=total_size, unit="B", unit_scale=True)
 
-    with open(os.path.join(folder, "ne_10m_coastline.zip"), "wb") as file:
+    with open(os.path.join(folder, "ne_10m_populated_places.zip"), "wb") as file:
         for data in response.iter_content(block_size):
             progress_bar.update(len(data))
             file.write(data)
@@ -38,7 +49,7 @@ def downloadCoastline():
     progress_bar.close()
     print("Распаковка архива")
     # Разархивирование файла
-    zip_path = os.path.join(folder, "ne_10m_coastline.zip")
+    zip_path = os.path.join(folder, "ne_10m_populated_places.zip")
     with zipfile.ZipFile(zip_path, "r") as zip_ref:
         zip_ref.extractall(folder)
 
@@ -56,7 +67,7 @@ def shp_to_json(input_shp, output_json):
         data.append({"properties": atr, "geometry": geom})
 
     with open(output_json, 'w') as json_file:
-        json.dump(data, json_file)
+        json.dump(data, json_file, indent=4)
 
     print(f"Сконвертировано: {input_shp}")
 
@@ -76,16 +87,7 @@ def json_to_csv(input_json, output_csv):
         for item in data:
             properties = item["properties"]
             geometry = item["geometry"]
-            if geometry["type"] == "Polygon":
-                coordinates = geometry["coordinates"][0]
-                for coordinate in coordinates:
-                    writer.writerow([properties["NAME"], coordinate[1], coordinate[0]])
-            elif geometry["type"] == "MultiPolygon":
-                polygons = geometry["coordinates"]
-                for polygon in polygons:
-                    for coordinate in polygon[0]:
-                        writer.writerow([properties["NAME"], coordinate[1], coordinate[0]])
-
+            writer.writerow([properties["NAME"], geometry["coordinates"][1], geometry["coordinates"][0]])
 
 downloadCoastline()
 

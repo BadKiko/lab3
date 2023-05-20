@@ -77,7 +77,7 @@ for item in find:
     region = realRegions[i].replace("\n", " ").replace("\r", "")
     country_spans = item.findAll("span", style=re.compile(r".*color:maroon.*"))
     for span in country_spans:
-        country = re.sub(r'[\[\]\r\n]', '', span.text).strip()
+        country = re.sub(r'[\[\]\r\n]', '', span.text).strip().replace("\n", " ").replace("\r", "")
         if country:
             countries += ", " + country
 
@@ -93,7 +93,10 @@ for item in find:
         region = "South/Central America & Carribean"
 
     if region or countries or cities[i] or dataset:
-        data.append([region, countries, cities[i], dataset])
+        data.append([region.replace("\n", " ").replace("\r", ""),
+         countries.replace("\n", " ").replace("\r", ""),
+          cities[i].replace("\n", " ").replace("\r", ""),
+           dataset])
 
     i += 1
 
