@@ -17,7 +17,7 @@ print(ascii_banner)
 print("\t\t\tCreated by Kiko with ♥")
 print(ascii_banner2)
 
-print("\n1/5 Инициализация всех текстовых файлов")
+print("\n1/8 Инициализация всех текстовых файлов")
 
 script_path = "firstStage.py"
 subprocess.call(["python", script_path])
@@ -51,3 +51,10 @@ print("\n7/8 Экспорт таблиц из .csv в PostgreSQL")
 
 script_path = "sevenStage.py"
 subprocess.call(["python", script_path])
+
+print("\n8/8 Отрисовка данных из PostgreSQL")
+
+script_path = "eightStage.py"
+subprocess.call(["python", script_path])
+
+print("\nВсе готово Kiko молодец")

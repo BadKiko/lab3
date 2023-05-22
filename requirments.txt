@@ -3,3 +3,5 @@ bs4
 pyfiglet
 psycopg2
 pandas
+paramiko
+

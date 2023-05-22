@@ -45,7 +45,6 @@ def download_files(url, extension):
             for chunk in response.iter_content(chunk_size=8192):
                 file.write(chunk)
 
-# Пример использования
 url = 'https://academic.udayton.edu/kissock/http/Weather/citylistWorld.htm'
 extension = '.txt'
 
