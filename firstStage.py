@@ -1,5 +1,4 @@
-#Created by Kiko with ♥ for fucking slaves
-
+#Created by Kiko(Zhukov Kirill) with ♥
 
 #██╗░░██╗██╗██╗░░██╗░█████╗░
 #██║░██╔╝██║██║░██╔╝██╔══██╗
@@ -7,7 +6,6 @@
 #██╔═██╗░██║██╔═██╗░██║░░██║
 #██║░╚██╗██║██║░╚██╗╚█████╔╝
 #╚═╝░░╚═╝╚═╝╚═╝░░╚═╝░╚════╝░
-
 
 import os
 import requests

@@ -1,5 +1,4 @@
-#Created by Kiko with ♥ for fucking slaves
-
+#Created by Kiko(Zhukov Kirill) with ♥
 
 #██╗░░██╗██╗██╗░░██╗░█████╗░
 #██║░██╔╝██║██║░██╔╝██╔══██╗
@@ -46,4 +45,9 @@ subprocess.call(["python", script_path])
 print("\n6/8 Создание таблиц в .csv")
 
 script_path = "sixStage.py"
+subprocess.call(["python", script_path])
+
+print("\n7/8 Экспорт таблиц из .csv в PostgreSQL")
+
+script_path = "sevenStage.py"
 subprocess.call(["python", script_path])

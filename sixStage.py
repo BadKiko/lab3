@@ -1,11 +1,10 @@
-#Created by Kiko with ♥ for fucking slaves
-
+#Created by Kiko(Zhukov Kirill) with ♥
 
 #██╗░░██╗██╗██╗░░██╗░█████╗░
 #██║░██╔╝██║██║░██╔╝██╔══██╗
 #█████═╝░██║█████═╝░██║░░██║
 #██╔═██╗░██║██╔═██╗░██║░░██║
-#██║░╚██╗██║██║░╚██╗╚█████╔╝1
+#██║░╚██╗██║██║░╚██╗╚█████╔╝
 #╚═╝░░╚═╝╚═╝╚═╝░░╚═╝░╚════╝░
 
 
@@ -96,38 +95,74 @@ def createCities():
     print("Создан файл городов data/cities.csv")
 
 
-
 def createMeasurement():
     # Чтение файла cities.csv
     cities_df = pd.read_csv('data/cities.csv')
 
-    # Открытие CSV-файла для записи
-    with open('data/measurement.csv', 'w') as file:
-        file.write('city,mark,temperature\n')  # Запись заголовка
+    # Создание папки "measurement" или удаление существующей папки и создание новой
+    measurement_dir = 'data/measurement/'
+    if os.path.exists(measurement_dir):
+        # Удаление существующей папки и ее содержимого
+        for file_name in os.listdir(measurement_dir):
+            file_path = os.path.join(measurement_dir, file_name)
+            os.remove(file_path)
+        os.rmdir(measurement_dir)
+    os.mkdir(measurement_dir)
 
-        # Проход по каждой записи в cities_df
-        for index, row in cities_df.iterrows():
-            city_id = row['identifier']
-            dataset = row['dataset']
+    # Проход по каждой записи в cities_df
+    for index, row in cities_df.iterrows():
+        city_id = row['identifier']
+        dataset = row['dataset']
 
-            # Путь к файлу с данными
-            file_path = f'dataset/output_csv/{dataset}.csv'
-            if(os.path.exists(file_path)):
-                # Чтение данных из файла и запись в CSV-файл
-                with open(file_path, 'r') as data_file:
-                    next(data_file)  # Пропуск заголовка файла
+        # Путь к файлу с данными
+        file_path = os.path.join('dataset/output_csv', f'{dataset}.csv')
+        if os.path.exists(file_path):
+            # Чтение данных из файла и запись в CSV-файл
+            with open(file_path, 'r') as data_file:
+                next(data_file)  # Пропуск заголовка файла
+
+                # Создание CSV-файла для текущего набора данных
+                output_file_path = os.path.join(measurement_dir, f'{dataset}.csv')
+                with open(output_file_path, 'w') as output_file:
+                    output_file.write('city,timestamp,temperature\n')  # Запись заголовка
+
                     for line in data_file:
                         parts = line.strip().split(',')
-                        timestamp = parts[0] + "-" + parts[1] + "-" + parts[2]
+                        timestamp = f'{parts[0]}-{parts[1]}-{parts[2]}'
                         temperature = parts[3]
 
-                        # Запись строки в CSV-файл
-                        file.write(f'{city_id},{timestamp},{temperature}\n')
+                        # Запись строки в CSV-файл текущего набора данных
+                        output_file.write(f'{city_id},{timestamp},{temperature}\n')
 
-    print("Создан файл с измерениями data/measurement.csv")
+    print("Созданы файлы с измерениями в папке data/measurement/")
+
+    
+
+def addCoastline():
+    # Путь к исходному файлу coastline
+    source_file = "coastline/output_convert/ne_10m_coastline.csv"
+    
+    # Путь к целевому файлу coastline
+    target_file = "data/coastline.csv"
+
+    # Считываем исходный файл с использованием pandas
+    df = pd.read_csv(source_file, delimiter=',')
+
+    # Создаем столбец и добавляем его в DataFrame
+    df['shape'] = range(1, len(df) + 1)
+    df['segment'] = range(1, len(df) + 1)
+
+    # Оставляем только столбцы "shape segment", "latitude" и "longitude"
+    df = df[['shape', 'segment', 'latitude', 'longitude']]
+
+    # Сохраняем обновленный DataFrame в целевой файл
+    df.to_csv(target_file, index=False)
+
+    print("Файл coastline/output_convert/ne_10m_coastline.csv перемещен и дополнен.")
 
 
 createRegions()
 createCountries()
 createCities()
 createMeasurement()
+addCoastline()

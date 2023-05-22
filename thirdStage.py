@@ -1,5 +1,4 @@
-#Created by Kiko with ♥ for fucking slaves
-
+#Created by Kiko(Zhukov Kirill) with ♥
 
 #██╗░░██╗██╗██╗░░██╗░█████╗░
 #██║░██╔╝██║██║░██╔╝██╔══██╗
@@ -80,15 +79,14 @@ def json_to_csv(input_json, output_csv):
         writer = csv.writer(csv_file)
 
         # Write CSV header
-        header = list(data[0]["properties"].keys()) + ["latitude", "longitude"]
+        header = ["latitude", "longitude"]
         writer.writerow(header)
 
         # Write data rows
         for item in data:
-            properties = list(item["properties"].values())
             coordinates = item["geometry"]["coordinates"]
             for coord in coordinates:
-                writer.writerow(properties + [coord[1], coord[0]])
+                writer.writerow([coord[1], coord[0]])
 
 
 downloadCoastline()
