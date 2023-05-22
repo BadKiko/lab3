@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 hostname = '192.168.122.243'
 username = 'postgres'
 password = 'kiko123'
-database = 'testdb'
+database = 'mainkiko'
 
 conn = None
 
@@ -15,7 +15,7 @@ def drawMap():
     cursor = conn.cursor()
 
     # Выполнение SQL-запроса для получения данных
-    query = "SELECT longtitude, latitude FROM coastline"
+    query = "SELECT longitude, latitude FROM data.coastline"
     cursor.execute(query)
 
     # Получение результатов запроса
@@ -26,11 +26,11 @@ def drawMap():
     conn.close()
 
     # Создание DataFrame из результатов запроса
-    data = pd.DataFrame(results, columns=['longtitude', 'latitude'])
+    data = pd.DataFrame(results, columns=['longitude', 'latitude'])
 
     # Создание графика
     plt.figure(figsize=(10, 6))
-    plt.scatter(data['longtitude'], data['latitude'], s=0.5, alpha=0.5)
+    plt.scatter(data['longitude'], data['latitude'], s=0.5, alpha=0.5)
     plt.xlabel('Longitude')
     plt.ylabel('Latitude')
     plt.title('Map')
