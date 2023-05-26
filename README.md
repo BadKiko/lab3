@@ -8,7 +8,7 @@ apk add python3 py3-pip gcc g++ make linux-headers base-build py3-pandas py3-num
 ```
 Первичная установка всего в **Arch-Linux**:
 ```
-sudo pacman -S python3 python-psycopg2
+sudo pacman -S python3 python-psycopg2 setuptools
 ```
 
 Далее копируем файлы с **Git**:
