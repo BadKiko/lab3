@@ -6,6 +6,10 @@
 ```
 apk add python3 py3-pip gcc g++ make linux-headers base-build py3-pandas py3-numpy py3-matplotlib
 ```
+Первичная установка всего в **Arch-Linux**:
+```
+sudo pacman -S python3 python-psycopg2
+```
 
 Далее копируем файлы с **Git**:
 
