@@ -4,7 +4,7 @@
 
 Первичная установка всего в **Alpine**:
 ```
-apk add python3 py3-pip gcc g++ make linux-headers base-build py3-pandas py3-numpy
+apk add python3 py3-pip gcc g++ make linux-headers base-build py3-pandas py3-numpy py3-matplotlib
 ```
 
 Далее копируем файлы с **Git**:
