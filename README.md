@@ -4,7 +4,7 @@
 
 Первичная установка всего в **Alpine**:
 ```
-apk add python3 py3-pip gcc g++ make linux-headers build-base py3-pandas py3-numpy py3-matplotlib postgresql-dev
+apk add python3 py3-pip gcc g++ make linux-headers build-base py3-pandas py3-numpy py3-matplotlib postgresql-dev python3-dev
 ```
 Первичная установка всего в **Arch-Linux**:
 ```
