@@ -12,15 +12,16 @@ import psycopg2
 import csv
 import os
 import time
+from datetime import datetime
 
 # Параметры подключения к базе данных
-hostname = '192.168.122.243'
+hostname = '192.168.122.40'
 username = 'postgres'
 password = 'kiko123'
-database = 'testdb'
+database = 'mainkiko'
 
 # Параметры подключения к SFTP-серверу
-hostname_sftp = '192.168.122.179'
+hostname_sftp = '192.168.122.40'
 username_sftp = 'postgres'
 password_sftp = 'kiko123'
 
@@ -167,7 +168,7 @@ def create_foreign_table(table_name, csv_file):
     create_table_query = f"""
         CREATE FOREIGN TABLE external.{table_name} (
             city INTEGER,
-            mark TEXT,
+            mark TIMESTAMP WITHOUT TIME ZONE,
             temperature DOUBLE PRECISION
         )
         SERVER file_server
@@ -294,7 +295,7 @@ def get_connection():
             time.sleep(delay)
 
 # Проверка правильности информации о базе данных
-verify_database_info()
+#verify_database_info()
 
 # Установка подключения
 get_connection()
@@ -320,17 +321,17 @@ if conn is not None:
 
     print("Создаем таблицу измерений")
     # Создание таблицы "measurement"
-    create_table('data','measurement', ['city INTEGER REFERENCES data.cities(identifier)', 'mark TEXT', 'temperature TEXT'])
+    create_table('data','measurement', ['city INTEGER REFERENCES data.cities(identifier)', 'mark TIMESTAMP WITHOUT TIME ZONE', 'temperature TEXT'])
 
     print("Создаем таблицу береговых линий")
     # Создание таблицы "coastline"
     create_table('data', 'coastline', ['shape INTEGER', 'segment INTEGER', 'latitude DOUBLE PRECISION', 'longitude DOUBLE PRECISION'])
 
 
-    try:
-        transfer_files_to_database()
-    except:
-        print(f"Не удалось подключиться к SFTP")
+    #try:
+    #    transfer_files_to_database()
+    #except:
+    #    print(f"Не удалось подключиться к SFTP")
 
     # Создание внешних таблиц измерений
     create_measurement_foreign_tables()

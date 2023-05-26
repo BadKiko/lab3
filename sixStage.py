@@ -128,11 +128,22 @@ def createMeasurement():
 
                     for line in data_file:
                         parts = line.strip().split(',')
-                        timestamp = f'{parts[0]}-{parts[1]}-{parts[2]}'
-                        temperature = parts[3]
+                        if int(parts[0]) >= 10:
+                            mounths = parts[0]
+                        else:
+                            mounths = "0"+parts[0]
 
-                        # Запись строки в CSV-файл текущего набора данных
-                        output_file.write(f'{city_id},{timestamp},{temperature}\n')
+                        if int(parts[1]) >= 10:
+                            days = parts[1]
+                        else:
+                            days = "0"+parts[1]
+
+                        if mounths != "00" and days != "00":
+                            timestamp = parts[2]+"-"+mounths+"-"+days+ " 00:00:00"
+                            temperature = parts[3]
+
+                            # Запись строки в CSV-файл текущего набора данных
+                            output_file.write(f'{city_id},{timestamp},{temperature}\n')
 
     print("Созданы файлы с измерениями в папке data/measurement/")
 
