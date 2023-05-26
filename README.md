@@ -23,7 +23,7 @@ cd lab3
 Далее устанавливаем нужные зависимости **Python**:
 
 ```
-python -r requirments.txt
+pip install -r requirments.txt
 ```
 
 ## Настройка PostgreSQL
