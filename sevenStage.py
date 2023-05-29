@@ -341,7 +341,7 @@ if conn is not None:
 
     print("Создаем таблицу измерений")
     # Создание таблицы "measurement"
-    create_table('data','measurement', ['city INTEGER REFERENCES data.cities(identifier)', 'mark TIMESTAMP WITHOUT TIME ZONE', 'temperature TEXT'])
+    create_table('data','measurement', ['city INTEGER REFERENCES data.cities(identifier)', 'mark TIMESTAMP WITHOUT TIME ZONE', 'temperature DOUBLE PRECISION'])
 
     print("Создаем таблицу береговых линий")
     # Создание таблицы "coastline"
