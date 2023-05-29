@@ -249,7 +249,7 @@ def import_csv_to_table(schema, csv_file, table_name):
 def create_coastline():
     shp = fiona.open("coastline/ne_10m_coastline.shp")
     i = 0
-    sql = 'INSERT INTO data.coastline (shape, segment, latitude, longitude) VALUES'
+    sql = 'INSERT INTO data.coastline (shape, segment, longitude,latitude) VALUES'
     for feature in shp:
      arr = feature['geometry']['coordinates']
      x,y = np.array(arr).T
