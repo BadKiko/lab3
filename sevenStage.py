@@ -10,12 +10,14 @@
 import paramiko
 import psycopg2
 import csv
+import numpy as np
 import os
 import time
 from datetime import datetime
+import fiona
 
 # Параметры подключения к базе данных
-hostname = '192.168.122.40'
+hostname = '192.168.122.243'
 username = 'postgres'
 password = 'kiko123'
 database = 'mainkiko'
@@ -244,6 +246,24 @@ def import_csv_to_table(schema, csv_file, table_name):
     cursor.close()
 
 
+def create_coastline():
+    shp = fiona.open("coastline/ne_10m_coastline.shp")
+    i = 0
+    sql = 'INSERT INTO data.coastline (shape, segment, latitude, longitude) VALUES'
+    for feature in shp:
+     arr = feature['geometry']['coordinates']
+     x,y = np.array(arr).T
+    
+     for j in range (len(x)):
+      sql += f'({i}, {j}, {x[j]}, {y[j]}),'
+     i = i + 1
+    sql = sql[:-1] + ';'
+    cur = conn.cursor()
+    cur.execute(sql)
+    cur.close()
+    conn.commit()
+
+
 def merge_all_scheme(schema, table_name):
     cur = conn.cursor()
 
@@ -327,6 +347,7 @@ if conn is not None:
     # Создание таблицы "coastline"
     create_table('data', 'coastline', ['shape INTEGER', 'segment INTEGER', 'latitude DOUBLE PRECISION', 'longitude DOUBLE PRECISION'])
 
+    create_coastline()
 
     #try:
     #    transfer_files_to_database()
@@ -347,10 +368,6 @@ if conn is not None:
     print("Импорт данных в таблицу городов из data/cities.csv")
     # Импорт данных в таблицу "cities"
     import_csv_to_table('data', 'data/cities.csv', 'cities')
-
-    print("Импорт данных в таблицу береговых линий из data/coastline.csv")
-    # Импорт данных в таблицу "coastline"
-    import_csv_to_table('data', 'data/coastline.csv', 'coastline')
 
     print("Соединение всех внешних таблиц из external в measurement")
     merge_all_scheme('data', 'measurement')
