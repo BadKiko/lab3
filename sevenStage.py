@@ -315,7 +315,7 @@ def get_connection():
             time.sleep(delay)
 
 # Проверка правильности информации о базе данных
-#verify_database_info()
+verify_database_info()
 
 # Установка подключения
 get_connection()
